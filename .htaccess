@@ -6,9 +6,6 @@
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [L]
     
-    # Правило для /bod
-    RewriteRule ^bod/?$ bod/bod.php [L]
-
     # Основное правило
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
