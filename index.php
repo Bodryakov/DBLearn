@@ -7,10 +7,10 @@ require_once 'config.php';
 session_start(); 
 
 // После session_start() и перед обработкой маршрутов
-// $request_uri = $_SERVER['REQUEST_URI'];
-// $base_path = parse_url($request_uri, PHP_URL_PATH);
-// $segments = $base_path ? explode('/', trim($base_path, '/')) : [];
-// $segments = array_map('strtolower', $segments);
+$request_uri = $_SERVER['REQUEST_URI'];
+$base_path = parse_url($request_uri, PHP_URL_PATH);
+$segments = $base_path ? explode('/', trim($base_path, '/')) : [];
+$segments = array_map('strtolower', $segments);
 
 // Обработка маршрута /panel
 if (!empty($segments[0]) && $segments[0] === 'panel') {
