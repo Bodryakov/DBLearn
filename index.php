@@ -17,36 +17,14 @@ $base_path = parse_url($request_uri, PHP_URL_PATH);
 $segments = $base_path ? explode('/', trim($base_path, '/')) : [];
 $segments = array_map('strtolower', $segments);
 
-// Обработка /bod ДО других маршрутов
-if (!empty($segments[0]) && $segments[0] === 'bod') {
-    if (empty($_SESSION['authenticated'])) {
-        header('Location: /bod/login');
-        exit;
-    }
-    if (!empty($segments[1]) && $segments[1] === 'login') {
-        require __DIR__ . '/bod/login.php';
-        exit;
-    }
-    if (!empty($segments[1]) && $segments[1] === 'dashboard') {
-        require __DIR__ . '/bod/dashboard.php';
-        exit;
-    }
-    header('Location: /bod/login');
-    exit;
-}
-
-
-
-
-
 
 
 
 // Определение текущего URL
-$request_uri = $_SERVER['REQUEST_URI'];
-$base_path = parse_url($request_uri, PHP_URL_PATH);
-$segments = explode('/', trim($base_path, '/'));
-$segments = array_map('strtolower', $segments);
+// $request_uri = $_SERVER['REQUEST_URI'];
+// $base_path = parse_url($request_uri, PHP_URL_PATH);
+// $segments = explode('/', trim($base_path, '/'));
+// $segments = array_map('strtolower', $segments);
 
 // Обработка маршрута /login
 if (!empty($segments[0]) && $segments[0] === 'login') {
@@ -60,20 +38,7 @@ if (!empty($segments[0]) && $segments[0] === 'logout') {
     exit;
 }
 
-// Защита маршрута /bod - проверка авторизации
-if (!empty($segments[0]) && $segments[0] === 'bod') {
-    // Проверка авторизации
-    if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-        // Сохраняем запрошенный URL для редиректа после авторизации
-        $_SESSION['redirect_after_login'] = '/bod';
-        header('Location: /login');
-        exit;
-    }
-    
-    // Если авторизован - показываем админ-панель
-    require 'bod/bod.php';
-    exit;
-}
+
 
 // Обработка остальных маршрутов
 try {
@@ -195,3 +160,17 @@ try {
     echo "Ошибка сервера: " . $e->getMessage();
     exit;
 }
+
+// index.php
+
+session_start();
+
+// Check if the user is authenticated
+if (empty($_SESSION['authenticated'])) {
+    header('Location: /login');
+    exit;
+}
+
+// Redirect to the admin panel
+header('Location: /panel');
+exit;

@@ -1,5 +1,5 @@
 <?php
-// Файл: bod/bod.php
+// Файл panel.php
 // Полная админ-панель с редактором уроков, тестов и задач
 
 require_once __DIR__ . '/../config.php';
@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (empty($_SESSION['authenticated'])) {
-    header('Location: /bod/login');
+    header('Location: /login');
     exit;
 }
 
