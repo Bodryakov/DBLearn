@@ -2,7 +2,7 @@
 // Файл panel.php
 // Полная админ-панель с редактором уроков, тестов и задач
 
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/config.php';
 
 // Проверка сессии
 if (session_status() === PHP_SESSION_NONE) {
