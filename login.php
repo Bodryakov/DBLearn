@@ -1,6 +1,9 @@
-<?php
-// login.php - форма входа в админ-панель с безопасным редиректом
+<!-- login.php - форма входа в админ-панель с безопасным редиректом -->
 
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 session_start();
 
 $error = '';
