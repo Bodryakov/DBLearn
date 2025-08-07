@@ -17,8 +17,15 @@ $base_path = parse_url($request_uri, PHP_URL_PATH);
 $segments = $base_path ? explode('/', trim($base_path, '/')) : [];
 $segments = array_map('strtolower', $segments);
 
-
-
+// Обработка маршрута /panel
+if (!empty($segments[0]) && $segments[0] === 'panel') {
+    if (empty($_SESSION['authenticated'])) {
+        header('Location: /login');
+        exit;
+    }
+    require 'panel.php';
+    exit;
+}
 
 // Определение текущего URL
 // $request_uri = $_SERVER['REQUEST_URI'];
@@ -28,11 +35,16 @@ $segments = array_map('strtolower', $segments);
 
 // Обработка маршрута /login
 if (!empty($segments[0]) && $segments[0] === 'login') {
+    // Если пользователь уже авторизован, перенаправляем на панель
+    if (!empty($_SESSION['authenticated'])) {
+        header('Location: /panel');
+        exit;
+    }
     require 'login.php';
     exit;
 }
 
-// Обработка выхода из системы
+// Обработка маршрута /logout
 if (!empty($segments[0]) && $segments[0] === 'logout') {
     require 'logout.php';
     exit;
@@ -161,16 +173,16 @@ try {
     exit;
 }
 
-// index.php
+// // index.php
 
-session_start();
+// session_start();
 
-// Check if the user is authenticated
-if (empty($_SESSION['authenticated'])) {
-    header('Location: /login');
-    exit;
-}
+// // Check if the user is authenticated
+// if (empty($_SESSION['authenticated'])) {
+//     header('Location: /login');
+//     exit;
+// }
 
-// Redirect to the admin panel
-header('Location: /panel');
-exit;
+// // Redirect to the admin panel
+// header('Location: /panel');
+// exit;
