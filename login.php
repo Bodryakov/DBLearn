@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($login === $ADMIN_LOGIN && $password === $ADMIN_PASSWORD) {
             $_SESSION['authenticated'] = true;
-            header('Location: /bod/dashboard');
+            header('Location: /panel');
             exit;
         } else {
             $error = 'Неверный логин или пароль';
