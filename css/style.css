@@ -1,0 +1,367 @@
+/* Базовые стили */
+:root {
+    --primary-color: #1976d2;
+    --secondary-color: #2196f3;
+    --accent-color: #ff4081;
+    --light-gray: #f5f5f5;
+    --medium-gray: #e0e0e0;
+    --dark-gray: #424242;
+    --text-color: #212121;
+    --success-color: #4caf50;
+    --error-color: #f44336;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-gray);
+    padding: 20px;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Стили для контейнера уровней */
+.levels-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.level-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center; /* Добавляем центрирование содержимого */
+}
+
+.level-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.level-card h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px; /* Увеличиваем отступ вместо прогресса */
+}
+
+.level-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.level-link:hover {
+    background-color: var(--secondary-color);
+}
+
+.app-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: var(--dark-gray);
+}
+
+/* Стили для страницы уровня */
+.content-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.breadcrumbs {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
+.breadcrumbs a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.sections-list ul {
+    list-style: none;
+}
+
+.sections-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.sections-list li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    display: block;
+    padding: 8px 0;
+}
+
+.sections-list li a:hover {
+    color: var(--primary-color);
+}
+
+/* Стили для страницы раздела */
+.lessons-list ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+.lessons-list li {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.lessons-list li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.lessons-list li a:hover {
+    color: var(--primary-color);
+}
+
+/* Стили для страницы урока */
+.lesson-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.lesson-path {
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.theory {
+    margin-bottom: 40px;
+}
+
+.theory h2, .theory h3 {
+    margin: 20px 0 15px;
+    color: var(--primary-color);
+}
+
+.theory p {
+    margin-bottom: 15px;
+}
+
+.theory ul, .theory ol {
+    margin: 15px 0 15px 30px;
+}
+
+.theory li {
+    margin-bottom: 8px;
+}
+
+.theory code {
+    background: #f5f5f5;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.theory pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+/* Стили для тестов */
+.tests {
+    margin: 40px 0;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.tests h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.test-item {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.test-question {
+    font-weight: 500;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.answer {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.answer:hover {
+    background-color: #f5f5f5;
+}
+
+.answer input {
+    margin-right: 10px;
+}
+
+.answer.correct {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+    position: relative;
+}
+
+.answer.correct::after {
+    content: '✓';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.answer.incorrect {
+    background-color: #ffebee;
+    border-color: #f44336;
+    position: relative;
+}
+
+.answer.incorrect::after {
+    content: '✗';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f44336;
+    font-weight: bold;
+}
+
+/* Стили для задач */
+.tasks {
+    margin: 40px 0;
+}
+
+.tasks h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.task-item {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.task-item h3 {
+    margin-bottom: 10px;
+    color: var(--dark-gray);
+}
+
+/* Навигация урока */
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.nav-btn.prev::before {
+    content: '← ';
+}
+
+.nav-btn.next::after {
+    content: ' →';
+}
+
+
+
+/* стиль для кнопки выхода */
+
+.btn-danger {
+    background: #f44336;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background: #d32f2f;
+}
+
+
+
+
+
+
+
+
+/* Стили для админ-панели (уже включены в bod.php) */
