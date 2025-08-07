@@ -36,27 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if ($login === $ADMIN_LOGIN && $password === $ADMIN_PASSWORD) {
             $_SESSION['authenticated'] = true;
-            
-            // Удаляем CSRF-токен после успешной авторизации
-            unset($_SESSION['csrf_token']);
-            
-            if ($remember) {
-                // Безопасные куки
-                setcookie('remember_me', $login, [
-                    'expires' => time() + 30 * 24 * 60 * 60,
-                    'path' => '/',
-                    'secure' => true,    // Только HTTPS
-                    'httponly' => true,  // Недоступно для JS
-                    'samesite' => 'Strict'
-                ]);
-            } else {
-                setcookie('remember_me', '', time() - 3600, '/');
-            }
-            
-            // Редирект на сохраненный URL или по умолчанию
-            $redirect = $_SESSION['redirect_after_login'] ?? '/bod';
-            unset($_SESSION['redirect_after_login']);
-            header("Location: $redirect");
+            header('Location: /bod/dashboard');
             exit;
         } else {
             $error = 'Неверный логин или пароль';

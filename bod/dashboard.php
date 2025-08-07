@@ -4,8 +4,14 @@
 
 require_once __DIR__ . '/../config.php';
 
-// УДАЛЕНА ПРОВЕРКА АВТОРИЗАЦИИ ИЗ ЭТОГО ФАЙЛА
-// Теперь авторизация проверяется в index.php перед подключением этого файла
+// Проверка сессии
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (empty($_SESSION['authenticated'])) {
+    header('Location: /bod/login');
+    exit;
+}
 
 // Обработка POST-запросов (CRUD операции)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -1,5 +1,3 @@
-
-
 <?php
 // index.php: Главная точка входа приложения
 
@@ -21,15 +19,19 @@ $segments = array_map('strtolower', $segments);
 
 // Обработка /bod ДО других маршрутов
 if (!empty($segments[0]) && $segments[0] === 'bod') {
-    // Проверка авторизации
     if (empty($_SESSION['authenticated'])) {
-        $_SESSION['redirect_after_login'] = '/bod';
-        header('Location: /login');
+        header('Location: /bod/login');
         exit;
     }
-    
-    // Подключение админ-панели
-    require __DIR__ . '/bod/bod.php';
+    if (!empty($segments[1]) && $segments[1] === 'login') {
+        require __DIR__ . '/bod/login.php';
+        exit;
+    }
+    if (!empty($segments[1]) && $segments[1] === 'dashboard') {
+        require __DIR__ . '/bod/dashboard.php';
+        exit;
+    }
+    header('Location: /bod/login');
     exit;
 }
 

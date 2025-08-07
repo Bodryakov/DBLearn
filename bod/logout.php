@@ -12,5 +12,5 @@ session_destroy();
 setcookie('remember_me', '', time() - 3600, '/');
 
 // Перенаправляем на страницу входа
-header('Location: /login');
+header('Location: /bod/login');
 exit;
