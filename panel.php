@@ -520,11 +520,6 @@ try {
             <p>Управление разделами и уроками</p>
         </div>
 
-        <!-- Вывод сообщений об ошибке -->
-        <?php if (isset($error)): ?>
-            <div class="message error"><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
-
         <!-- Секция управления разделами -->
         <div class="admin-section">
             <h2>Управление разделами</h2>
