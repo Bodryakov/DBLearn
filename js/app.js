@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Инициализация подсветки кода
     if (window.hljs) {
-        document.querySelectorAll('pre code').forEach((block) => {
+        document.querySelectorAll('pre code, code[class^="language-"]').forEach((block) => {
             hljs.highlightElement(block);
         });
     }
