@@ -64,11 +64,15 @@ function validateSlug($slug) {
 function sanitizeHtml($html) {
     $allowedTags = '<p><h1><h2><h3><h4><h5><h6><ul><ol><li><code><pre><strong><em><a><table><tr><td><th><blockquote>';
     $html = strip_tags($html, $allowedTags);
-    
+
     // Удаление запрещённых атрибутов
-    $html = preg_replace('/\s(on\w+)=["\'][^"\']*["\']/i', '', $html);
+    $html = preg_replace('/\s(on\w+)=\"[^\"]*\"|\'[^\']*\'/i', '', $html);
     $html = preg_replace('/\sstyle=("|\')[^"\']*("|\')/i', '', $html);
-    $html = preg_replace('/\sclass=("|\')[^"\']*("|\')/i', '', $html);
-    
+    // Удаляем class у всех тегов, кроме <code> и <pre>
+    $html = preg_replace_callback('/<(?!code|pre)([a-z0-9]+)([^>]*)>/i', function($matches) {
+        $tag = $matches[1];
+        $attrs = preg_replace('/\sclass=("|\')[^"\']*("|\')/i', '', $matches[2]);
+        return '<' . $tag . $attrs . '>';
+    }, $html);
     return $html;
 }
