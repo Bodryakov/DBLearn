@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+?>
+<?php
 // index.php - Главная точка входа приложения
 
 require_once 'config.php';
