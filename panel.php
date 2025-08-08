@@ -4,6 +4,31 @@
 
 require_once __DIR__ . '/config.php';
 
+// Загрузка данных для шаблонов
+function loadData() {
+    global $pdo;
+    
+    // Получение списка уровней
+    $stmt = $pdo->query("SELECT * FROM levels ORDER BY order_num");
+    $levels = $stmt->fetchAll();
+    
+    // Получение списка разделов с названиями уровней
+    $stmt = $pdo->query("SELECT s.*, l.title_ru as level_title 
+                         FROM sections s 
+                         JOIN levels l ON s.level_id = l.id 
+                         ORDER BY s.order_num");
+    $sections = $stmt->fetchAll();
+    
+    // Получение списка уроков с названиями разделов
+    $stmt = $pdo->query("SELECT les.*, s.title_ru as section_title 
+                         FROM lessons les 
+                         JOIN sections s ON les.section_id = s.id 
+                         ORDER BY les.order_num");
+    $lessons = $stmt->fetchAll();
+    
+    return [$levels, $sections, $lessons];
+}
+
 // Проверка сессии
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -12,6 +37,12 @@ if (empty($_SESSION['authenticated'])) {
     header('Location: /login');
     exit;
 }
+
+// Загрузка данных
+[$levels, $sections, $lessons] = loadData();
+
+// Подключение шаблона
+require_once __DIR__ . '/templates/admin_layout.php';
 
 // Обработка POST-запросов (CRUD операции)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
