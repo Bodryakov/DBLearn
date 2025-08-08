@@ -30,7 +30,6 @@ error_reporting(E_ALL);
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <a href="/<?= htmlspecialchars($level['slug']) ?>" class="level-link">Начать обучение</a>
             </section>
         <?php endforeach; ?>
     </main>
