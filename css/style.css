@@ -353,8 +353,6 @@ body {
     padding: 10px;
     background-color: var(--light-gray);
     border-radius: 6px;
-    max-height: 250px;
-    overflow-y: auto;
 }
 
 .section-item {
