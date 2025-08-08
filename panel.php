@@ -566,6 +566,9 @@ try {
                     <button type="submit" name="update_section" class="btn" style="display:none">Обновить раздел</button>
                     <button type="button" id="cancelEdit" class="btn" style="display:none">Отмена</button>
                 </div>
+                <?php if (isset($success) && strpos($success, 'Раздел успешно добавлен') !== false): ?>
+                    <div class="message success" style="grid-column: 1 / -1; margin-top: 0.5rem;"> <?= htmlspecialchars($success) ?> </div>
+                <?php endif; ?>
             </form>
 
             <!-- Таблица существующих разделов -->
@@ -709,6 +712,9 @@ try {
                     <button type="submit" name="update_lesson" class="btn" style="display:none">Обновить урок</button>
                     <button type="button" id="cancelLessonEdit" class="btn" style="display:none">Отмена</button>
                 </div>
+                <?php if (isset($success) && strpos($success, 'Урок успешно добавлен') !== false): ?>
+                    <div class="message success" style="grid-column: 1 / -1; margin-top: 0.5rem;"> <?= htmlspecialchars($success) ?> </div>
+                <?php endif; ?>
             </form>
 
             <!-- Таблица существующих уроков -->
