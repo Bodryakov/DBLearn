@@ -27,6 +27,19 @@ error_reporting(E_ALL);
                             <a href="/<?= htmlspecialchars($level['slug']) ?>/<?= htmlspecialchars($section['slug']) ?>" class="section-link">
                                 <h3><?= htmlspecialchars($section['title_ru']) ?></h3>
                             </a>
+                            <?php if (!empty($section['lessons'])): ?>
+                                <div class="section-lessons">
+                                    <ul>
+                                        <?php foreach ($section['lessons'] as $lesson): ?>
+                                            <li>
+                                                <a href="/<?= htmlspecialchars($level['slug']) ?>/<?= htmlspecialchars($section['slug']) ?>/<?= htmlspecialchars($lesson['slug']) ?>" class="lesson-link">
+                                                    <?= htmlspecialchars($lesson['title_ru']) ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>

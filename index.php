@@ -55,11 +55,19 @@ try {
         $stmt = $pdo->query("SELECT * FROM levels");
         $levels = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        // Для каждого уровня получаем его разделы
+        // Для каждого уровня получаем его разделы и уроки
         foreach ($levels as &$level) {
             $sectionsStmt = $pdo->prepare("SELECT * FROM sections WHERE level_id = ? ORDER BY order_num");
             $sectionsStmt->execute([$level['id']]);
             $level['sections'] = $sectionsStmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Для каждого раздела получаем уроки
+            foreach ($level['sections'] as &$section) {
+                $lessonsStmt = $pdo->prepare("SELECT * FROM lessons WHERE section_id = ? ORDER BY order_num");
+                $lessonsStmt->execute([$section['id']]);
+                $section['lessons'] = $lessonsStmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            unset($section); // Разрываем ссылку на последний элемент
         }
         unset($level); // Разрываем ссылку на последний элемент
         include 'templates/home.php';

@@ -381,6 +381,37 @@ body {
     margin: 0;
 }
 
+.section-lessons {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--medium-gray);
+}
+
+.section-lessons ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.section-lessons li {
+    margin: 5px 0;
+}
+
+.lesson-link {
+    display: block;
+    padding: 4px 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.lesson-link:hover {
+    background-color: var(--light-gray);
+    color: var(--primary-color);
+}
+
 .lessons-count {
     color: var(--dark-gray);
     font-size: 0.85rem;
