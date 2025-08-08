@@ -36,10 +36,10 @@ body {
 
 /* Стили для контейнера уровней */
 .levels-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -47,12 +47,13 @@ body {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    padding: 20px;
+    padding: 30px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center; /* Добавляем центрирование содержимого */
+    text-align: center; 
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
 }
 
 .level-card:hover {
@@ -342,8 +343,6 @@ body {
 .btn-danger:hover {
     background: #d32f2f;
 }
-
-/* Стили для админ-панели (уже включены в bod.php) */
 
 .sections-container {
     flex: 1;
