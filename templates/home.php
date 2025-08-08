@@ -16,6 +16,14 @@
         <?php foreach ($levels as $level): ?>
             <section class="level-card" data-level-slug="<?= htmlspecialchars($level['slug']) ?>">
                 <h2><?= htmlspecialchars($level['title_ru']) ?></h2>
+                <div class="sections-container">
+                    <?php foreach ($level['sections'] as $section): ?>
+                        <div class="section-item">
+                            <h3><?= htmlspecialchars($section['title_ru']) ?></h3>
+                            <p class="section-description"><?= htmlspecialchars($section['description_ru']) ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
                 <a href="/<?= htmlspecialchars($level['slug']) ?>" class="level-link">Начать обучение</a>
             </section>
         <?php endforeach; ?>

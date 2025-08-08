@@ -12,6 +12,9 @@ $base_path = parse_url($request_uri, PHP_URL_PATH);
 $segments = $base_path ? explode('/', trim($base_path, '/')) : [];
 $segments = array_map('strtolower', $segments);
 
+
+// Авторизация
+
 // Обработка маршрута /panel
 if (!empty($segments[0]) && $segments[0] === 'panel') {
     if (empty($_SESSION['authenticated'])) {
@@ -40,12 +43,21 @@ if (!empty($segments[0]) && $segments[0] === 'logout') {
 }
 
 
-
 // Обработка остальных маршрутов
 try {
     // Главная страница (список уровней)
     if (empty($segments[0])) {
+        // Получаем уровни
         $stmt = $pdo->query("SELECT * FROM levels");
+        $levels = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Для каждого уровня получаем его разделы
+        foreach ($levels as &$level) {
+            $sectionsStmt = $pdo->prepare("SELECT * FROM sections WHERE level_id = ?");
+            $sectionsStmt->execute([$level['id']]);
+            $level['sections'] = $sectionsStmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        unset($level); // Разрываем ссылку на последний элемент
         $levels = $stmt->fetchAll();
         include 'templates/home.php';
         exit;
