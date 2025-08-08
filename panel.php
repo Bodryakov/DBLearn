@@ -46,9 +46,6 @@ if (empty($_SESSION['authenticated'])) {
 // Загрузка данных
 [$levels, $sections, $lessons] = loadData();
 
-// Подключение шаблона
-require_once __DIR__ . '/templates/admin_layout.php';
-
 // Обработка POST-запросов (CRUD операции)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Добавление нового раздела
