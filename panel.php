@@ -762,7 +762,21 @@ try {
             toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link table | code',
             height: 500,
             license_key: 'gpl',
-            content_css: '/css/style.css'
+            content_css: '/css/style.css',
+            setup: function (editor) {
+              function highlightInEditor() {
+                if (window.hljs) {
+                  editor.getBody().querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                  });
+                }
+              }
+              editor.on('SetContent', highlightInEditor);
+              editor.on('Change', highlightInEditor);
+              editor.on('PastePostProcess', highlightInEditor);
+            },
+            extended_valid_elements: 'pre[class],code[class]',
+            valid_elements: '*[*]'
         });
 
         // JavaScript для админ-панели

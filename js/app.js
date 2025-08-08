@@ -37,4 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
+    
+    // Инициализация подсветки кода
+    if (window.hljs) {
+        document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightElement(block);
+        });
+    }
 });
