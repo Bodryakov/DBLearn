@@ -1,4 +1,9 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+?>
+
+<?php
 // Файл panel.php
 // Полная админ-панель с редактором уроков, тестов и задач
 
@@ -9,7 +14,7 @@ function loadData() {
     global $pdo;
     
     // Получение списка уровней
-    $stmt = $pdo->query("SELECT * FROM levels ORDER BY order_num");
+    $stmt = $pdo->query("SELECT * FROM levels");
     $levels = $stmt->fetchAll();
     
     // Получение списка разделов с названиями уровней
