@@ -24,7 +24,9 @@ error_reporting(E_ALL);
                 <div class="sections-container">
                     <?php foreach ($level['sections'] as $section): ?>
                         <div class="section-item">
-                            <h3><?= htmlspecialchars($section['title_ru']) ?></h3>
+                            <a href="/<?= htmlspecialchars($level['slug']) ?>/<?= htmlspecialchars($section['slug']) ?>" class="section-link">
+                                <h3><?= htmlspecialchars($section['title_ru']) ?></h3>
+                            </a>
                         </div>
                     <?php endforeach; ?>
                 </div>

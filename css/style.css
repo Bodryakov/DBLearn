@@ -403,3 +403,14 @@ body {
     margin-top: 5px;
     opacity: 0.8;
 }
+
+.section-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.section-link:hover {
+    color: var(--primary-color);
+}
