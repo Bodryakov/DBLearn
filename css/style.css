@@ -38,10 +38,11 @@ body {
 /* Стили для контейнера уровней */
 .levels-container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 90vw;
     gap: 20px;
-    width: 100vw;
-    margin: 0 -20px;
+    width: 90vw;
+    margin: 0 auto;
+    justify-content: center;
 }
 
 .level-card {
@@ -466,11 +467,6 @@ body {
         padding: 20px;
     }
 
-    .levels-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
     .content-container {
         padding: 25px;
     }
@@ -491,12 +487,6 @@ body {
 
 /* Laptops (1024px) */
 @media screen and (min-width: 1024px) {
-    .levels-container {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
     .content-container,
     .lesson-container {
         padding: 30px;
@@ -510,11 +500,6 @@ body {
 
 /* Desktop (1600px) */
 @media screen and (min-width: 1600px) {
-    .levels-container {
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 1500px;
-    }
-
     .content-container,
     .lesson-container {
         max-width: 1200px;
@@ -529,11 +514,6 @@ body {
 
 /* Large Screens (1920px) */
 @media screen and (min-width: 1920px) {
-    .levels-container {
-        grid-template-columns: repeat(5, 1fr);
-        max-width: 1800px;
-    }
-
     .content-container,
     .lesson-container {
         max-width: 1400px;
