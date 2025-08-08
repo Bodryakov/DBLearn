@@ -25,6 +25,7 @@ error_reporting(E_ALL);
                     <?php foreach ($level['sections'] as $section): ?>
                         <div class="section-item">
                             <h3><?= htmlspecialchars($section['title_ru']) ?></h3>
+                            <p class="lessons-count">Уроков: <?= (int)$section['lessons_count'] ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>

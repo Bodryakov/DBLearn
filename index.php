@@ -57,7 +57,7 @@ try {
         
         // Для каждого уровня получаем его разделы
         foreach ($levels as &$level) {
-            $sectionsStmt = $pdo->prepare("SELECT * FROM sections WHERE level_id = ?");
+            $sectionsStmt = $pdo->prepare("SELECT * FROM sections WHERE level_id = ? ORDER BY order_num");
             $sectionsStmt->execute([$level['id']]);
             $level['sections'] = $sectionsStmt->fetchAll(PDO::FETCH_ASSOC);
         }
