@@ -520,10 +520,7 @@ try {
             <p>Управление разделами и уроками</p>
         </div>
 
-        <!-- Вывод сообщений об успехе/ошибке -->
-        <?php if (isset($success) && strpos($success, 'Раздел успешно добавлен') === false && strpos($success, 'Урок успешно добавлен') === false): ?>
-            <div class="message success"><?= htmlspecialchars($success) ?></div>
-        <?php endif; ?>
+        <!-- Вывод сообщений об ошибке -->
         <?php if (isset($error)): ?>
             <div class="message error"><?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
