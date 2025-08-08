@@ -558,7 +558,7 @@ try {
                     <button type="button" id="cancelEdit" class="btn" style="display:none">Отмена</button>
                 </div>
                 <?php if (isset($success) && strpos($success, 'Раздел успешно добавлен') !== false): ?>
-                    <div class="message success" style="grid-column: 1 / -1; margin-top: 0.5rem;"> <?= htmlspecialchars($success) ?> </div>
+                    <div class="alert alert-success" style="margin-top:0.5rem;">Раздел успешно добавлен</div>
                 <?php endif; ?>
             </form>
 
