@@ -25,7 +25,6 @@ error_reporting(E_ALL);
                     <?php foreach ($level['sections'] as $section): ?>
                         <div class="section-item">
                             <h3><?= htmlspecialchars($section['title_ru']) ?></h3>
-                            <p class="section-description"><?= htmlspecialchars($section['description_ru']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
