@@ -427,3 +427,119 @@ body {
 .section-link:hover {
     color: var(--primary-color);
 }
+
+/* Responsive Design */
+/* Base styles (mobile first - min-width: 360px) */
+@media screen and (min-width: 360px) {
+    body {
+        padding: 10px;
+    }
+
+    .levels-container {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .content-container {
+        padding: 15px;
+    }
+
+    .lesson-container {
+        padding: 15px;
+    }
+
+    .answers {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .app-header {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+}
+
+/* Tablets (720px) */
+@media screen and (min-width: 720px) {
+    body {
+        padding: 20px;
+    }
+
+    .levels-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .content-container {
+        padding: 25px;
+    }
+
+    .lesson-container {
+        padding: 25px;
+    }
+
+    .answers {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .sections-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Laptops (1024px) */
+@media screen and (min-width: 1024px) {
+    .levels-container {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .content-container,
+    .lesson-container {
+        padding: 30px;
+        max-width: 900px;
+    }
+
+    .sections-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Desktop (1600px) */
+@media screen and (min-width: 1600px) {
+    .levels-container {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1500px;
+    }
+
+    .content-container,
+    .lesson-container {
+        max-width: 1200px;
+    }
+
+    .sections-container {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+}
+
+/* Large Screens (1920px) */
+@media screen and (min-width: 1920px) {
+    .levels-container {
+        grid-template-columns: repeat(5, 1fr);
+        max-width: 1800px;
+    }
+
+    .content-container,
+    .lesson-container {
+        max-width: 1400px;
+    }
+
+    .sections-container {
+        grid-template-columns: repeat(5, 1fr);
+        max-width: 1800px;
+    }
+}
