@@ -62,7 +62,6 @@ try {
             $level['sections'] = $sectionsStmt->fetchAll(PDO::FETCH_ASSOC);
         }
         unset($level); // Разрываем ссылку на последний элемент
-        $levels = $stmt->fetchAll();
         include 'templates/home.php';
         exit;
     }
