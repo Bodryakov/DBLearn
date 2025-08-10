@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($lesson['title_ru']) ?> | DOMLearn</title>
     <link rel="stylesheet" href="/css/style.css">
-    <!-- Highlight.js style -->
-    <link rel="stylesheet" href="/highlightjs/styles/default.min.css">
     <script src="/js/app.js" defer></script>
-    <!-- Highlight.js library -->
-    <script src="/highlightjs/highlight.min.js" defer></script>
 </head>
 <body>
     <header class="app-header">
