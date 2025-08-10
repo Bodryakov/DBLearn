@@ -46,40 +46,88 @@ if (empty($_SESSION['authenticated'])) {
 // Загрузка данных
 [$levels, $sections, $lessons] = loadData();
 
+// === ВАЛИДАЦИЯ ДАННЫХ ДЛЯ РАЗДЕЛОВ ===
+function validateSection($pdo, $titleRu, $slug, $orderNum, $sectionId = null) {
+    $errors = [];
+    if ($titleRu === '') {
+        $errors[] = 'Название раздела обязательно.';
+    }
+    if ($slug === '') {
+        $errors[] = 'Slug обязателен.';
+    } elseif (!preg_match('/^[a-z0-9\-]+$/', $slug)) {
+        $errors[] = 'Slug должен содержать только маленькие латинские буквы, цифры и дефисы.';
+    }
+    if ($orderNum === '' || !is_numeric($orderNum)) {
+        $errors[] = 'Порядковый номер обязателен.';
+    }
+    // Проверка уникальности title_ru
+    $sql = 'SELECT COUNT(*) FROM sections WHERE title_ru = ?';
+    $params = [$titleRu];
+    if ($sectionId) {
+        $sql .= ' AND id != ?';
+        $params[] = $sectionId;
+    }
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    if ($stmt->fetchColumn() > 0) {
+        $errors[] = 'Раздел с таким названием уже существует.';
+    }
+    // Проверка уникальности slug
+    $sql = 'SELECT COUNT(*) FROM sections WHERE slug = ?';
+    $params = [$slug];
+    if ($sectionId) {
+        $sql .= ' AND id != ?';
+        $params[] = $sectionId;
+    }
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    if ($stmt->fetchColumn() > 0) {
+        $errors[] = 'Раздел с таким slug уже существует.';
+    }
+    return $errors;
+}
+
 // Обработка POST-запросов (CRUD операции)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Добавление нового раздела
     if (isset($_POST['add_section'])) {
         $levelId = (int)$_POST['level_id'];
         $titleRu = trim($_POST['title_ru']);
-        $slug = validateSlug(trim($_POST['slug']));
-        $orderNum = (int)$_POST['order_num'];
-        
-        try {
-            $stmt = $pdo->prepare("INSERT INTO sections (level_id, title_ru, slug, order_num) 
-                                   VALUES (?, ?, ?, ?)");
-            $stmt->execute([$levelId, $titleRu, $slug, $orderNum]);
-            $success = "Раздел успешно добавлен!";
-        } catch (PDOException $e) {
-            $error = "Ошибка при добавлении раздела: " . $e->getMessage();
+        $slug = strtolower(trim($_POST['slug']));
+        $orderNum = trim($_POST['order_num']);
+        $validationErrors = validateSection($pdo, $titleRu, $slug, $orderNum);
+        if (empty($validationErrors)) {
+            try {
+                $stmt = $pdo->prepare("INSERT INTO sections (level_id, title_ru, slug, order_num) 
+                                       VALUES (?, ?, ?, ?)");
+                $stmt->execute([$levelId, $titleRu, $slug, $orderNum]);
+                $success = "Раздел успешно добавлен!";
+            } catch (PDOException $e) {
+                $error = "Ошибка при добавлении раздела: " . $e->getMessage();
+            }
+        } else {
+            $error = implode('<br>', $validationErrors);
         }
     }
-    
     // Обновление существующего раздела
     if (isset($_POST['update_section'])) {
         $sectionId = (int)$_POST['section_id'];
         $titleRu = trim($_POST['title_ru']);
-        $slug = validateSlug(trim($_POST['slug']));
-        $orderNum = (int)$_POST['order_num'];
-        
-        try {
-            $stmt = $pdo->prepare("UPDATE sections 
-                                   SET title_ru = ?, slug = ?, order_num = ? 
-                                   WHERE id = ?");
-            $stmt->execute([$titleRu, $slug, $orderNum, $sectionId]);
-            $success = "Раздел успешно обновлён!";
-        } catch (PDOException $e) {
-            $error = "Ошибка при обновлении раздела: " . $e->getMessage();
+        $slug = strtolower(trim($_POST['slug']));
+        $orderNum = trim($_POST['order_num']);
+        $validationErrors = validateSection($pdo, $titleRu, $slug, $orderNum, $sectionId);
+        if (empty($validationErrors)) {
+            try {
+                $stmt = $pdo->prepare("UPDATE sections 
+                                       SET title_ru = ?, slug = ?, order_num = ? 
+                                       WHERE id = ?");
+                $stmt->execute([$titleRu, $slug, $orderNum, $sectionId]);
+                $success = "Раздел успешно обновлён!";
+            } catch (PDOException $e) {
+                $error = "Ошибка при обновлении раздела: " . $e->getMessage();
+            }
+        } else {
+            $error = implode('<br>', $validationErrors);
         }
     }
     
@@ -951,6 +999,52 @@ try {
                     });
                 }
             });
+            
+            // === КЛИЕНТСКАЯ ВАЛИДАЦИЯ ДЛЯ РАЗДЕЛОВ ===
+            const sectionForm = document.querySelector('.admin-section form.admin-form');
+            if (sectionForm) {
+                sectionForm.addEventListener('submit', function(e) {
+                    // Только для разделов (не уроков)
+                    if (!this.querySelector('[name="add_section"]') && !this.querySelector('[name="update_section"]')) return;
+                    let errors = [];
+                    const titleRu = document.getElementById('title_ru').value.trim();
+                    const slug = document.getElementById('slug').value.trim();
+                    const orderNum = document.getElementById('order_num').value.trim();
+                    const sectionId = document.getElementById('section_id').value;
+                    // Проверка обязательности
+                    if (!titleRu) errors.push('Название раздела обязательно.');
+                    if (!slug) errors.push('Slug обязателен.');
+                    if (!orderNum) errors.push('Порядковый номер обязателен.');
+                    // Проверка формата slug
+                    if (slug && !/^[a-z0-9\-]+$/.test(slug)) errors.push('Slug должен содержать только маленькие латинские буквы, цифры и дефисы.');
+                    // Проверка уникальности по таблице
+                    document.querySelectorAll('.data-table tbody tr').forEach(row => {
+                        const rowTitle = row.children[2].textContent.trim();
+                        const rowSlug = row.children[3].textContent.trim();
+                        const rowId = row.children[0].textContent.trim();
+                        if (titleRu && rowTitle === titleRu && (!sectionId || rowId !== sectionId)) {
+                            errors.push('Раздел с таким названием уже существует.');
+                        }
+                        if (slug && rowSlug === slug && (!sectionId || rowId !== sectionId)) {
+                            errors.push('Раздел с таким slug уже существует.');
+                        }
+                    });
+                    if (errors.length > 0) {
+                        e.preventDefault();
+                        let msg = document.querySelector('.section-validation-error');
+                        if (!msg) {
+                            msg = document.createElement('div');
+                            msg.className = 'message error section-validation-error';
+                            sectionForm.insertBefore(msg, sectionForm.firstChild);
+                        }
+                        msg.innerHTML = errors.join('<br>');
+                        return false;
+                    } else {
+                        let msg = document.querySelector('.section-validation-error');
+                        if (msg) msg.remove();
+                    }
+                });
+            }
         });
     </script>
 </body>
