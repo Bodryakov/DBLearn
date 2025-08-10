@@ -758,8 +758,8 @@ try {
         tinymce.init({
             selector: '#content',
             license_key: 'gpl', // Используйте эту строку для GPL лицензии
-            plugins: 'lists link table code',
-            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link table | code',
+            plugins: 'lists link table code fontfamily fontsize align',
+            toolbar: 'undo redo | styleselect | fontfamily fontsize | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link table | code',
             height: 500,
             license_key: 'gpl',
             content_css: '/css/style.css',
@@ -775,7 +775,7 @@ try {
               editor.on('Change', highlightInEditor);
               editor.on('PastePostProcess', highlightInEditor);
             },
-            extended_valid_elements: 'pre[class],code[class]',
+            extended_valid_elements: 'pre[class],code[class],span[style],font[face|size|color]',
             valid_elements: '*[*]'
         });
 
