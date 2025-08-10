@@ -62,17 +62,24 @@ function validateSlug($slug) {
  * @return string Безопасный HTML
  */
 function sanitizeHtml($html) {
-    $allowedTags = '<p><h1><h2><h3><h4><h5><h6><ul><ol><li><code><pre><strong><em><a><table><tr><td><th><blockquote>';
+    // Разрешаем span, font, b, u, s, br, div, а также основные теги TinyMCE
+    $allowedTags = '<p><h1><h2><h3><h4><h5><h6><ul><ol><li><code><pre><strong><em><a><table><tr><td><th><blockquote><span><font><b><u><s><br><div>';
     $html = strip_tags($html, $allowedTags);
 
-    // Удаление запрещённых атрибутов
-    $html = preg_replace('/\s(on\w+)=\"[^\"]*\"|\'[^\']*\'/i', '', $html);
-    $html = preg_replace('/\sstyle=("|\')[^"\']*("|\')/i', '', $html);
-    // Удаляем class у всех тегов, кроме <code> и <pre>
-    $html = preg_replace_callback('/<(?!code|pre)([a-z0-9]+)([^>]*)>/i', function($matches) {
+    // Разрешаем только безопасные атрибуты: style, align, face, size, color, href, target
+    $html = preg_replace_callback('/<(\w+)([^>]*)>/i', function($matches) {
         $tag = $matches[1];
-        $attrs = preg_replace('/\sclass=("|\')[^"\']*("|\')/i', '', $matches[2]);
-        return '<' . $tag . $attrs . '>';
+        $attrs = $matches[2];
+        // Разрешённые атрибуты
+        $allowed = ['style', 'align', 'face', 'size', 'color', 'href', 'target', 'class'];
+        preg_match_all('/(\w+)=("[^"]*"|\'[^\']*\')/i', $attrs, $attrMatches, PREG_SET_ORDER);
+        $safeAttrs = '';
+        foreach ($attrMatches as $attr) {
+            if (in_array(strtolower($attr[1]), $allowed)) {
+                $safeAttrs .= ' ' . $attr[1] . '=' . $attr[2];
+            }
+        }
+        return '<' . $tag . $safeAttrs . '>';
     }, $html);
     return $html;
 }
