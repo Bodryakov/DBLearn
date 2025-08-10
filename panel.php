@@ -759,7 +759,7 @@ try {
             selector: '#content',
             license_key: 'gpl', // Используйте эту строку для GPL лицензии
             plugins: 'lists link table code fontfamily fontsize align color',
-            toolbar: 'undo redo | styleselect | fontfamily fontsize | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link table | code',
+            toolbar: 'undo redo | styleselect | fontfamily fontsize | forecolor | bold italic | alignleft aligncenter alignright alignjustify | link table | code',
             height: 500,
             license_key: 'gpl',
             content_css: '/css/style.css',
